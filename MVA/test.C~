@@ -1,0 +1,50 @@
+/**********************************************************************************
+ * Project   : TMVA - a Root-integrated toolkit for multivariate data analysis    *
+ * Package   : TMVA                                                               *
+ * Exectuable: TMVAClassificationApplication                                      *
+ *                                                                                *
+ * This macro provides a simple example on how to use the trained classifiers     *
+ * within an analysis module                                                      *
+ **********************************************************************************/
+
+#include <cstdlib>
+#include <vector>
+#include <iostream>
+#include <map>
+#include <string>
+
+#include "TFile.h"
+#include "TTree.h"
+#include "TString.h"
+#include "TSystem.h"
+#include "TROOT.h"
+#include "TChain.h"
+#include "TStopwatch.h"
+
+#if not defined(__CINT__) || defined(__MAKECINT__)
+#include "TMVA/Tools.h"
+#include "TMVA/Reader.h"
+#include "TMVA/MethodCuts.h"
+#endif
+
+using namespace TMVA;
+
+void TMVAClassificationApplication( int index=0) 
+{   
+    TString af[2]={
+        "../DataRunIUpdate.root",
+        "../MCRunIUpdate.root"
+    };
+    TString input_file_name=af[index];
+    TString st;
+
+    TString __dir = TString(input_file_name(0,input_file_name.Last('/')+1));
+    TString __file = TString(input_file_name(input_file_name.Last('/')+1,input_file_name.Last('.')));
+    cout<<input_file_name<<endl;
+    cout<<input_file_name.Last('/')+1<<"\t"<<input_file_name.Last('.')<<endl;
+    cout<<"__file: "<<__file<<endl;
+    __file = __file.ReplaceAll(TString(".root"),TString(""));
+    TString output_file_name = __dir+__file+"MVA.root";
+    cout<<output_file_name<<endl;
+   
+}
